@@ -1,0 +1,31 @@
+QRGuard – Entities and Database
+Must have (R1)
+Scan – one upload and its result
+QRContent – decoded text, is it a link?
+URL – full link, scheme, host, real domain
+CheckResult – check name, passed?, severity, reason
+Verdict – Safe / Suspicious / Dangerous, advice, proceed allowed?
+KnownBrand – brand name, official domain
+Shortener – shortener domain (e.g. bit.ly)
+
+Relationships
+
+Scan → 1 QRContent
+QRContent → 0 or 1 URL
+Scan → many CheckResults
+Scan → 1 Verdict
+Should have (R2)
+Organisation – name, type
+OfficialDomain – domain, linked organisation
+Administrator – username, password hash
+MLPrediction – model name, probability
+
+Relationships
+
+Organisation → many OfficialDomains
+Administrator → manages many Organisations
+Scan → 0 or 1 MLPrediction
+Database
+Not stored: Scan, QRContent, URL, CheckResult, Verdict, MLPrediction (privacy, NFR-03)
+Stored (R1): known_brand, shortener (JSON file in December)
+Stored (R2): organisation, official_domain, administrator (SQLite)
